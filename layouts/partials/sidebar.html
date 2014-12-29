@@ -1,27 +1,30 @@
-<div class="sidebar">
-  <div class="container sidebar-sticky">
-    <div class="sidebar-about">
-      {{ with .Site.Params.gravatarHash }}<img src="http://www.gravatar.com/avatar/{{ . }}?s=200" alt="gravatar">{{ end }}
-      <h1>{{ .Site.Author.name }}</h1>
-      {{ with .Site.Params.tagline }}<p class="lead">{{ . }}</p>{{ end }}
-    </div>
+<!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
 
-    <ul class="sidebar-nav">
-      <li class="sidebar-nav-item"><a href="{{ .Site.BaseUrl }}/">Blog</a></li>
-      {{ range .Site.Menus.main }}
-      <li class="sidebar-nav-item"><a href="{{ .Url }}">{{ .Name }}</a></li>
-      {{end}}
-    </ul>
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A reserved <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that places the utmost gravity on content with a hidden drawer. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.</p>
+  </div>
 
-    <ul class="sidebar-nav">
-      {{ with .Site.Params.github }}<li class="sidebar-nav-item"><a href="{{ . }}">GitHub</a></li>{{ end }}
-      {{ with .Site.Params.linkedin }}<li class="sidebar-nav-item"><a href="{{ . }}">LinkedIn</a></li>{{ end }}
-      {{ with .Site.Params.googleplus }}<li class="sidebar-nav-item"><a href="{{ . }}">Google+</a></li>{{ end }}
-      {{ with .Site.Params.facebook }}<li class="sidebar-nav-item"><a href="{{ . }}">Facebook</a></li>{{ end }}
-      {{ with .Site.Params.twitter }}<li class="sidebar-nav-item"><a href="{{ . }}">Twitter</a></li>{{ end }}
-    </ul>
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item {{ if eq .Url "/" }} active {{ end }}" href="/">Home</a>
+    <a class="sidebar-nav-item {{ if eq .Url "post" }} active {{ end }}" href="/post">Posts</a>
 
-    <p>Copyright &copy; {{ .Now.Format "2006" }} <a href="{{ .Site.BaseUrl }}/license">License</a><br/>
-       Powered by <a href="http://hugo.spf13.com">Hugo</a> and <a href="https://github.com/zyro/hyde-x">Hyde-X</a></p>
+    {{ $thisperma := .Permalink }}
+    {{ range .Site.Recent.ByWeight }}
+      {{ if isset .Params "sidebar" }}
+        <a class="sidebar-nav-item {{ if eq .Permalink $thisperma }} active {{ end }}" href="{{ .Permalink }}">{{ .Title }}</a>
+      {{ end }}
+    {{ end }}
+
+    <a class="sidebar-nav-item" href="{{ .Site.Params.Github.Url }}/archive/{{ .Site.Params.Github.Head }}.zip">Download</a>
+    <a class="sidebar-nav-item" href="{{ .Site.Params.Github.Url }}">GitHub project</a>
+    <span class="sidebar-nav-item">Currently on {{ .Site.Params.Github.Head }}</span>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>&copy; {{ .Site.LastChange.Year }}. All rights reserved.</p>
   </div>
 </div>

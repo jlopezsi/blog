@@ -1,137 +1,49 @@
-Hyde-X
-======
+# Lanyon for Hugo
 
-Enhanced port of the Jekyll "[Hyde](https://github.com/poole/hyde)" theme to the Hugo site generator. Check below for a list of enhancements.
+[Lanyon](http://github.com/poole/lanyon) is a great theme for [Jekyll](http://jekyllrb.com). This is a port of that theme, but to another static site generator, [Hugo](http://github.com/spf13/hugo). I'm aiming to get the same look and interactions as the original Lanyon.
 
-You can find a live site using this theme [here](http://andreimihu.com) and the corresponding source code [here](https://github.com/zyro/andreimihu.com).
+Hugo and Jekyll are similar in that, out of the box, you can't make a presentable website out of them. You need some kind of theme first, or otherwise your site will be *really* bare-bones. If you're a designer, you might be comfortable doing that yourself. If you aren't, Jekyll has a thriving ecosystem of themes waiting for you. Hugo, being younger than Jekyll, does not. Lanyon-Hugo attempts to remedy that problem.
 
-* [Installation](#installation)
-* [Usage](#usage)
-* [Configuration](#configuration)
-* [Built-in colour themes](#built-in-colour-themes)
-* [Tips](#tips)
-* [Changes and enhancements from the original theme](#changes-and-enhancements-from-the-original-theme)
-* [Attribution](#attribution)
-* [Questions, ideas, bugs, pull requests?](#questions-ideas-bugs-pull-requests)
-* [License](#license)
+Lanyon-Hugo is a theme designed for blogging. While Hugo is flexible enough to turn almost any static content into a website, this theme is focused on blog-like use cases. Lanyon-Hugo retains the CSS, and therefore the look and feel, of the parent theme, Lanyon. This includes a sidebar that is hidden by default, and can be toggled with a button (implemented entirely in CSS). The sidebar gives some convenient navigation links, but when it is hidden, Lanyon-Hugo, just like Lanyon, is discreet and puts your content front and center.
 
-### Installation
+## Usage
 
-```
-$ cd your_site_repo/
-$ mkdir themes
-$ cd themes
-$ git clone https://github.com/zyro/hyde-x
-```
+To begin authoring content, all you have to do is clone this repository and start writing Markdown files in [`content/post`](content/post). Front matter for Hugo can be written in JSON, YAML or TOML. I am using JSON out of preference, but it's your content - use whatever language you want. Two example posts are already provided (lifted from the parent Lanyon, with links fixed for Hugo) as an example of the front matter you need.
 
-See the [official Hugo themes documentation](http://hugo.spf13.com/themes/installing) for more info.
+Note for Jekyll users: Jekyll parses the date out of your post's title, but Hugo does not. You must specify a date in the front matter. I specify the permalinks to look like Jekyll's in `config.json`, so if you set the date correctly, the permalinks will also look correct.
 
-### Usage
+Hugo's universal config file is [`config.json`](config.json) (or YAML, or TOML). You can change the base URL of your site, the title, and the tagline from this file. The link to your GitHub repository (for whatever the site represents, say a dev blog, or a personal GitHub Page) can also be changed here. If you are familiar with Hugo, you already know that you can add more parameters to the `params` object to introduce more variables.
 
-This theme expects a relatively standard Hugo blog/personal site layout:
-```
-.
-└── content
-    ├── post
-    |   ├── post1.md
-    |   └── post2.md
-    ├── license.md        // this is used in the sidebar footer link
-    └── other_page.md
-```
+### Fixed Pages
 
-Just run `hugo --theme=hyde-x` to generate your site!
+The original Lanyon had a layout for "pages", fixed content that didn't have a date. Lanyon-Hugo retains this concept, and refers to these pages as "fixed" (that's the content type, if you're familiar with Hugo concepts). Fixed pages will not display a date, only a title, and they will not be listed on the homepage of your site. Pages such as About (an example `about.md` has been lifted from the parent Lanyon) should generally be fixed.
 
-### Configuration
+You can alter the content of the custom 404 via [`fixed/404.md`](content/fixed/404.md). This is useful if you want a custom 404 for your GitHub Page.
 
-An example of what your site's `config.toml` could look like. All theme-specific parameters are under `[params]` and standard Hugo parameters are used where possible.
+### Sidebar Links
 
-``` toml
-baseurl = "http://example.com/"
-title = "Your site title"
-languageCode = "en-us"
-disqusShortname = "your_disqus_shortname" # Optional, enable Disqus integration
-MetaDataFormat = "toml"
+To indicate that a given piece of content should be linked in the sidebar, add a key `sidebar` to the front matter, and set it to `true`. See [`about.md`](content/fixed/about.md) for an example of this. You can pin content to the sidebar regardless of whether it is a post, or if it is fixed.
 
-[author]
-    name = "Your Name"
+Sidebar content is ordered by weight, specified in the front matter. The lowest weight goes to the top and the greatest weight goes to the bottom. I've included an extra example file, [`altab.md`](content/fixed/altab.md), to demonstrate this feature. If no weight is specified in the front matter, then the weight is zero (this behavior probably comes from the zero-value of integers in Go). You can set negative weights to exploit this feature. Note that the weight must be wrapped in quotes (ie a string). Looks like Hugo converts it to an integer internally.
 
-[permalinks]
-    # Optional. Change the permalink format for the 'post' content type.
-    # The format shown here is the same one Jekyll/Octopress uses by default.
-    post = "/blog/:year/:month/:day/:title/"
+Note for Jekyll users: In the original Lanyon, any content that had the `page` layout would be added to the sidebar. However, in Lanyon-Hugo, content with the `fixed` type will not be added to the sidebar automatically. You must specify the `sidebar` flag in the front matter.
 
-[indexes]
-    # Optional. Use if you want tags and lists.
-    category = "categories"
+Lanyon-Hugo generates a post list at `/post/`. By default, Lanyon doesn't actually have a post list, so there is no link for it anywhere in the theme. In my opinion, there are two sensible places to put it: in between the pagination buttons, and on the sidebar. You could conceivably do both. I've added a sidebar entry for it. If you want to add a button between the pagination buttons, take a look at my Lanyon fork; it has an example of how to do such a thing.
 
-#
-# All parameters below here are optional and can be mixed and matched.
-#
-[params]
-    # Used when a given page doesn't set its own.
-    defaultDescription = "Your default page description"
-    defaultKeywords = "your,default,page,keywords"
+### Look and Feel
 
-    # Changes sidebar background and link/accent colours.
-    # See below for more colour options.
-    # This also works: "theme-base-08 layout-reverse", or just "layout-reverse".
-	theme = "theme-base-08"
+The CSS from the original Lanyon is unchanged, and you can find it in [`static/css`](static/css). Any of the modifications suggested for Lanyon can also be applied to Lanyon-Hugo, by changing the CSS here.
 
-    # Select a syntax highight.
-    # Check the static/css/highlight directory for options.
-    highlight = "sunburst"
+You can use syntax highlighting, if you have [Pygments](http://pygments.org/). See the "example content" post for an example. Lanyon has a color scheme of some kind for Pygments in `css/syntax.css`, but right now Hugo doesn't know how to use it (everything will be higlighted in Monokai). When Hugo implements this feature, I will also add it to Lanyon-Hugo. More detail on Hugo's syntax highlighting shortcode can be found [here](http://hugo.spf13.com/extras/highlighting).
 
-    # Displays under the author name in the sidebar, keep it short.
-	tagline = "Your favourite quote or soundbite."
+## To Do
 
-    # Metadata used to drive integrations.
-	googleAuthorship = "Your Google+ profile ID"
-    googleAnalytics = "Your Google Analytics tracking code"
-    gravatarHash = "MD5 hash of your Gravatar email address"
+While Lanyon-Hugo is aiming for functional compatibility with Lanyon (ie all the old functionality is available and looks similar), there are still some things I'm missing:
+- pagination. Lanyon-Hugo does not have next/previous buttons (well they're there, but as you can see, they don't have any links). Jekyll's pagination feature is quite good, but Hugo's pagination is still on the roadmap for now. I may implement a hackish solution in the meantime, but ideally I'd rather wait until Hugo has a solid solution for this problem.
 
-    # Sidebar social links, avoid enabling too many of these if possible.
-    # These should be full URLs.
-    github = ""
-    linkedin = ""
-    googleplus = ""
-    facebook = ""
-    twitter = ""
-```
+## Contributing
 
-### Built-in colour themes
+If you're interested in hacking on this theme, please check out [CONTRIBUTING](CONTRIBUTING.md).
 
-Hyde-X provides 8 built-in colour themes by default, with the option to define more in your own custom CSS.
-
-![Hyde-X theme classes](https://github.com/zyro/hyde-x/blob/master/images/theme-colours.png)
-
-### Tips
-
-* Pages where you specify `menu = "main"` in the front matter will be linked in the sidebar just below the `Blog` link.
-* Use the exact permalink format above to maintain old links if migrating from Jekyll/Octopress.
-* Although all of the syntax highlight CSS files under the theme's `static/css/highlight` are bundled with the site, only the one you choose will be included in the page and delivered to the browser.
-* Change the favicon by providing your own as `static/favicon.png` in your site directory.
-* Hugo makes it easy to override theme layout and behaviour, read about it [here](http://hugo.spf13.com/themes/customizing).
-
-### Changes and enhancements from the original theme
-
-* Category labels and lists.
-* Client-side syntax highlighting through [highlight.js](https://highlightjs.org/), sane fallback if disabled or no JS.
-* Disqus integration: comment counts listed under blog entry names in post list, comments displayed at the bottom of each post.
-* Gravatar image in sidebar.
-* Google Analytics integration.
-* Google Authorship metadata.
-* Sidebar link layout and footer format changes.
-* Blog post list now contains only the post description, not the full contents.
-* ...many other small layout tweaks!
-
-### Attribution
-
-Obviously largely a port of the awesome [Hyde](https://github.com/poole/hyde) theme.
-
-### Questions, ideas, bugs, pull requests?
-
-All feedback is welcome! Head over to the [issue tracker](https://github.com/zyro/hyde-x/issues).
-
-### License
-
-Open sourced under the [MIT license](https://github.com/zyro/hyde-x/blob/master/LICENSE).
+## License
+MIT, see [LICENSE.md](LICENSE.md).
