@@ -1,5 +1,5 @@
-{ "title": "About me", "sidebar": true, "weight": "1" }
-
+{ "title": "About", "sidebar": true, "weight": "1" }
+------------------------
 ## Dr. Jordi López Sintas (IP)
 ##Personal Information
 ###Address: 
