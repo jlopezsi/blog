@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Template on </title>
-    <link>http://tummychow.github.io/lanyon-hugo/categories/template/</link>
+    <link>http://jlopezsi.github.io/categories/template/</link>
     <description>Recent content in Template on </description>
     <generator>Hugo -- gohugo.io</generator>
     
     
     
     <lastBuildDate>Fri, 28 Mar 2014 00:00:00 UTC</lastBuildDate>
-    <atom:link href="http://tummychow.github.io/lanyon-hugo/categories/template/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://jlopezsi.github.io/categories/template/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Second Post</title>
-      <link>http://tummychow.github.io/lanyon-hugo/posts/middle/</link>
+      <link>http://jlopezsi.github.io/posts/middle/</link>
       <pubDate>Fri, 28 Mar 2014 00:00:00 UTC</pubDate>
       
-      <guid>http://tummychow.github.io/lanyon-hugo/posts/middle/</guid>
+      <guid>http://jlopezsi.github.io/posts/middle/</guid>
       <description>
 
 &lt;h2 id=&#34;sample-post-1:5d41645769bc0f1237f2300a661d7e18&#34;&gt;Sample Post 1&lt;/h2&gt;
